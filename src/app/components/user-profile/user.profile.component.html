@@ -1,0 +1,95 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <!-- User Information Section -->
+      <div class="card mb-4" *ngIf="userResponse">
+        <div class="card-header">
+          <h2 class="text-center">Thông tin người dùng</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <img [src]="userResponse.avatar || '/assets/default-avatar.png'" 
+                   class="img-fluid rounded-circle mb-3" 
+                   alt="User Avatar">
+            </div>
+            <div class="col-md-8">
+              <p><strong>Họ và tên:</strong> {{ userResponse.fullName }}</p>
+              <p><strong>Email:</strong> {{ userResponse.email }}</p>
+              <p><strong>Địa chỉ:</strong> {{ userResponse.address || 'Chưa cập nhật' }}</p>
+              <p><strong>Ngày sinh:</strong> {{ userResponse.dateOfBirth || 'Chưa cập nhật' }}</p>
+              <p><strong>Số điện thoại:</strong> {{ userResponse.phone_number || 'Chưa cập nhật' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Change Password Section -->
+      <div class="card">
+        <div class="card-header">
+          <h1 class="text-center">Đổi mật khẩu</h1>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+            <div class="mb-3">
+              <label for="oldPass" class="form-label">Mật khẩu cũ</label>
+              <input type="password" 
+                     class="form-control" 
+                     formControlName="oldPass"                         
+                     placeholder="Nhập mật khẩu cũ" 
+                     id="oldPass" 
+                     [class.is-invalid]="passwordForm.get('oldPass')!.invalid 
+                      && passwordForm.get('oldPass')!.touched">
+              <div *ngIf="passwordForm.get('oldPass')!.invalid 
+                && passwordForm.get('oldPass')!.touched" 
+                class="invalid-feedback">
+                Mật khẩu cũ ít nhất 3 ký tự.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Mật khẩu mới</label>
+              <input type="password" 
+                     class="form-control" 
+                     formControlName="password"                         
+                     placeholder="Nhập mật khẩu mới" 
+                     id="password" 
+                     [class.is-invalid]="passwordForm.get('password')!.invalid 
+                      && passwordForm.get('password')!.touched">
+              <div *ngIf="passwordForm.get('password')!.invalid 
+                && passwordForm.get('password')!.touched" 
+                class="invalid-feedback">
+                Mật khẩu mới ít nhất 3 ký tự.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="retype_password" class="form-label">Nhập lại mật khẩu mới</label>
+              <input type="password" 
+                     class="form-control" 
+                     formControlName="retype_password"                         
+                     placeholder="Nhập lại mật khẩu mới" 
+                     id="retype_password" 
+                     [class.is-invalid]="passwordForm.get('retype_password')!.invalid 
+                        || passwordForm.hasError('passwordMismatch')">
+              <div *ngIf="passwordForm.hasError('passwordMismatch')" 
+                class="invalid-feedback">
+                Mật khẩu không khớp.
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" 
+                      class="btn btn-primary" 
+                      [disabled]="passwordForm.invalid">
+                Đổi mật khẩu
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

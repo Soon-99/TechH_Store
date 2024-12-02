@@ -1,0 +1,73 @@
+<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+  <div class="container">
+    <a class="navbar-brand" href="/">TechCoop<span>.</span></a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+      aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbarsFurni">
+      <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/">Trang chủ</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/shop">Sản phẩm</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/contact">Liên hệ</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" routerLink="/blog">Blog</a>
+        </li>
+        <li class="nav-item dropdown">
+          <!-- User Icon -->
+          <!-- User Icon with click event -->
+          <a class="nav-link" (click)="toggleUserMenu()">
+            <img src="./assets/images/user.svg">
+          </a>
+
+
+          <!-- Dropdown Menu -->
+          <div *ngIf="showUserMenu" class="dropdown-menu show">
+            <!-- Logged-in State -->
+            <ng-container *ngIf="userResponse; else loginPrompt">
+              <div class="user-info p-2">
+                <img class="img-fluid rounded" [src]="userResponse.avatar">
+                <p class="mb-1">{{ userResponse.fullName }}</p>
+              </div>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" routerLink="/user-profile">
+                Thông Tin 
+              </button>
+              <button class="dropdown-item" (click)="logout()">
+                Đăng xuất
+              </button>
+            </ng-container>
+
+            <!-- Login Prompt for Logged-out State -->
+            <ng-template #loginPrompt>
+              <div class="user-info p-2">
+                <p class="mb-1">Bạn chưa đăng nhập</p>
+              </div>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item" (click)="navigateToLogin()">
+                Đăng nhập
+              </button>
+            </ng-template>
+          </div>
+        </li>
+        <li class="nav-item position-relative">
+          <a class="nav-link" href="/cart">
+              <img src="./assets/images/cart.svg" class="cart-icon">
+              <span class="cart-badge bg-danger fw-bold">{{ total }}</span> 
+          </a>
+      </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+<!-- End Header/Navigation -->

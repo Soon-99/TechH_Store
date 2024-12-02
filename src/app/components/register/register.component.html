@@ -1,0 +1,101 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css"
+    rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<app-header></app-header>
+<div class="registration-form">
+<form #registerForm="ngForm">
+    <div class="form-group">
+        <input type="text" class="form-control item" 
+               [(ngModel)]="userName" 
+               (ngModelChange)="onUserNameChange()"
+               placeholder="Tên đăng nhập" 
+               name="userName" 
+               required 
+               id="userName">
+        <div class="divider-nospace"></div>
+        @if (registerForm.controls['userName']?.errors?.['minlength']) {
+            <p class="text-danger">Tên đăng nhập phải có ít nhất 6 ký tự</p>
+          }
+    </div>
+
+    <div class="form-group">
+        <input type="email" class="form-control item" 
+               [(ngModel)]="email" 
+               (ngModelChange)="validateEmail()"
+               placeholder="Email" 
+               name="email" 
+               required 
+               id="email">
+        <div class="divider-nospace"></div>
+        @if (registerForm.controls['email']?.errors?.['invalidFormat']) {
+            <p class="text-danger">Định dạng email không hợp lệ</p>
+          }
+          @if (registerForm.controls['email']?.errors?.['invalidDomain']) {
+            <p class="text-danger">Chỉ chấp nhận email từ các domain: gmail.com, yahoo.com, hotmail.com</p>
+          }
+    </div>
+
+    <div class="form-group">
+        <input [type]="showPassword ? 'text' : 'password'" 
+               [(ngModel)]="password" 
+               name="password"
+               placeholder="Mật Khẩu" 
+               required 
+               class="form-control item" 
+               id="password">
+        <div class="divider-nospace"></div>
+        @if (registerForm.controls['password']?.errors?.['minlength']) {
+            <p class="text-danger">Mật khẩu phải có ít nhất 5 ký tự</p>
+          }
+    </div>
+
+    <div class="form-group">
+        <input [type]="showPassword ? 'text' : 'password'" 
+               placeholder="Xác nhận mật khẩu"
+               [(ngModel)]="retypePassword" 
+               name="retypePassword" 
+               (ngModelChange)="checkPasswordsMatch()"
+               required 
+               class="form-control item" 
+               id="retype-password">
+        <div class="divider-nospace"></div>
+        @if (registerForm.submitted && password !== retypePassword) {
+            <p class="text-danger">Mật khẩu không khớp</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <input type="date" 
+               class="form-control item" 
+               required 
+               id="date-of-birth"
+               [(ngModel)]="dateOfBirth" 
+               name="dateOfBirth" 
+               (ngModelChange)="checkAge()">
+        <div class="divider-nospace"></div>
+        @if (registerForm.submitted && checkAgeValidity()) {
+            <p class="text-danger">Bạn chưa đủ 18 tuổi</p>
+        }
+    </div>
+
+        <div class="form-group">
+            <input type="text" [(ngModel)]="address" placeholder="Địa chỉ" name="address" class="form-control item"
+                required id="address">
+            <div class="divider-nospace"></div>
+        </div>
+        <div class="form-group">
+            <button type="button" [disabled]="registerForm.invalid " (click)="register()"
+                class="btn btn-block create-account">
+                Đăng ký
+            </button>
+        </div>
+        <div class="form-group">
+            <div class="divider"></div>
+            <p class="text-center">
+                Bạn đã có tài khoản?
+                <span><a href="/login" class="register-link">Đăng nhập</a></span>
+            </p>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

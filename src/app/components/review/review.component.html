@@ -1,0 +1,94 @@
+<div *ngIf="reviews.length < 1" class="alert alert-danger">
+    Chưa có đánh giá
+  </div>
+<div class="col-md-4 text-end">
+    
+    <button class="btn btn-success" (click)="openCreateReviewModal()">
+      Tạo đánh giá
+    </button>
+  </div>
+ 
+<div class="review-container">
+    <div *ngFor="let review of reviews; let i = index" class="review-item">
+      <div class="review-header">
+        <h4 class="reviewer-name">{{ userName }}</h4>
+        <div class="review-rating">
+          <i *ngFor="let star of [].constructor(review.rating); let j = index" 
+             class="fa fa-star" 
+             [class.active]="j < review.rating">
+          </i>
+        </div>
+        <div class="review-date">{{ review.createdDate | date:'medium' }}</div>
+      </div>
+      <div class="review-content">
+        <p>{{ review.description }}</p>
+        <img *ngIf="review.image" [src]="review.image" class="review-image img-fluid">
+      </div>
+    </div>
+  </div>
+  @if (showCreateReviewModal) {
+    <div class="modal" tabindex="-1" style="display: block; background-color: rgba(0,0,0,0.5);">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create New Review</h5>
+            <button type="button" class="btn-close" (click)="showCreateReviewModal = false"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="star-rating">
+                  <ul class="list-inline rating-list" *ngFor="let star of stars; let i= index">
+                      <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}" (mouseover)="addClass(star)"
+                           (mouseout)="removeClass()">  <i class="fa fa-star"></i>
+                      </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="reviewDescription" class="form-label">Description</label>
+                <textarea 
+                  class="form-control" 
+                  id="reviewDescription"
+                  [(ngModel)]="newReview.description" 
+                  name="description"
+                  rows="4"
+                  placeholder="Write your review here">
+                </textarea>
+              </div>
+              
+              <div class="mb-3">
+                <label for="reviewImage" class="form-label">Review Image</label>
+                <input 
+                  type="file" 
+                  class="form-control" 
+                  id="reviewImage"
+                  (change)="onFileSelected($event)" 
+                  name="image" 
+                  accept="image/*">
+                @if (selectedImageFileName) {
+                  <small class="text-success">{{ selectedImageFileName }} selected</small>
+                }
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button 
+              type="button" 
+              class="btn btn-secondary" 
+              (click)="showCreateReviewModal = false">
+              Cancel
+            </button>
+            <button 
+              type="button" 
+              class="btn btn-primary" 
+              (click)="createReview()">
+              Create Review
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }

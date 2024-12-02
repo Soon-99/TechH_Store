@@ -1,0 +1,113 @@
+<div class="container">
+  <h1>Category Management</h1>        
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <button class="btn btn-success" (click)="openCreateModal()">
+        Add New Category
+      </button>
+    </div>      
+  </div>
+  
+  <table class="table table-striped">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Brand ID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(category of categories; track category.id){
+        <tr>
+          <td>{{ category.id }}</td>
+          <td>{{ category.name }}</td>
+          <td>{{ category.description }}</td>
+          <td>{{ category.brandId }}</td>
+          <td>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-primary" 
+                (click)="openUpdateModal(category)">
+                Update
+              </button>
+              <button class="btn btn-sm btn-danger" 
+                (click)="deleteCategory(category)">
+                Delete
+              </button>            
+            </div>
+          </td>          
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="text-center">
+            <h4>No categories found</h4>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>    
+
+  <!-- Modal for Create/Update -->
+  @if(isModalOpen) {
+    <div class="modal" tabindex="-1" style="display: block;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              {{ modalMode === 'create' ? 'Create New Category' : 'Update Category' }}
+            </h5>
+            <button type="button" class="btn-close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  [(ngModel)]="currentCategory.name" 
+                  name="name" 
+                  required
+                >
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  [(ngModel)]="currentCategory.description" 
+                  name="description"
+                  required
+                >
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Brand ID</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  [(ngModel)]="currentCategory.brandId" 
+                  name="brandId" 
+                  
+                >
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">
+              Cancel
+            </button>
+            <button 
+              type="button" 
+              class="btn btn-primary" 
+              (click)="saveCategory()"
+              [disabled]="!currentCategory.name"
+            >
+              {{ modalMode === 'create' ? 'Create' : 'Update' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

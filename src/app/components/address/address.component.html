@@ -1,0 +1,131 @@
+<app-header></app-header>
+<div class="container my-5 py-5">
+  <section>
+    <div class="row">
+      <div class="col-md-8 mb-4">
+        <!-- Success Message -->
+        <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ successMessage }}
+          <button type="button" class="btn-close" (click)="successMessage = ''" aria-label="Close"></button>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ errorMessage }}
+          <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Close"></button>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header py-3">
+            <h5 class="mb-0 text-font text-uppercase">Tạo Địa Chỉ Mới</h5>
+          </div>
+          <div class="card-body">
+            <!-- Reactive Form -->
+            <form [formGroup]="addressForm" (ngSubmit)="createTransaction()">
+              <div class="row mb-4">
+                <div class="col">
+                  <div class="form-outline">
+                    <input 
+                      type="text" 
+                      id="firstName" 
+                      class="form-control" 
+                      formControlName="firstName"
+                      [class.is-invalid]="firstName.invalid && firstName.touched"
+                    />
+                    <label class="form-label" for="firstName">First name</label>
+                    <div *ngIf="firstName.invalid && firstName.touched" class="invalid-feedback">
+                      First name is required and must be at least 2 characters.
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-outline">
+                    <input 
+                      type="text" 
+                      id="lastName" 
+                      class="form-control" 
+                      formControlName="lastName"
+                      [class.is-invalid]="lastName.invalid && lastName.touched"
+                    />
+                    <label class="form-label" for="lastName">Last name</label>
+                    <div *ngIf="lastName.invalid && lastName.touched" class="invalid-feedback">
+                      Last name is required and must be at least 2 characters.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Address Input -->
+              <div class="form-outline mb-4">
+                <input 
+                  type="text" 
+                  id="address" 
+                  class="form-control" 
+                  formControlName="address"
+                  [class.is-invalid]="address.invalid && address.touched"
+                />
+                <label class="form-label" for="address">Address</label>
+                <div *ngIf="address.invalid && address.touched" class="invalid-feedback">
+                  Address is required and must be at least 5 characters.
+                </div>
+              </div>
+
+              <!-- Phone Input -->
+              <div class="form-outline mb-4">
+                <input 
+                  type="tel" 
+                  id="phoneNumber" 
+                  class="form-control" 
+                  formControlName="phoneNumber"
+                  [class.is-invalid]="phoneNumber.invalid && phoneNumber.touched"
+                />
+                <label class="form-label" for="phoneNumber">Phone</label>
+                <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="invalid-feedback">
+                  Please enter a valid 10-11 digit phone number.
+                </div>
+              </div>
+
+              <!-- Email Input -->
+              <div class="form-outline mb-4">
+                <input 
+                  type="email" 
+                  id="email" 
+                  class="form-control" 
+                  formControlName="email"
+                  [class.is-invalid]="addressForm.get('email')?.invalid && addressForm.get('email')?.touched"
+                />
+                <label class="form-label" for="email">Email (Optional)</label>
+                <div *ngIf="addressForm.get('email')?.invalid && addressForm.get('email')?.touched" class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+
+              <!-- Additional Information -->
+              <div class="form-outline mb-4">
+                <textarea 
+                  class="form-control" 
+                  id="additionalInformation" 
+                  rows="4"
+                  formControlName="additionalInformation"
+                ></textarea>
+                <label class="form-label" for="additionalInformation">Additional information</label>
+              </div>
+              
+              <!-- Submit Button -->
+              <div class="text-center">
+                <button 
+                  type="submit" 
+                  class="btn button-address col-md-10"
+                  [disabled]="addressForm.invalid"
+                >
+                  Create Address
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>

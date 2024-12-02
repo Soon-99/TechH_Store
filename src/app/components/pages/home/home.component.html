@@ -1,0 +1,342 @@
+<app-header></app-header>
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Tối giản hiện đại <span clsas="d-block"></span></h1>
+                    <p class="mb-4">Tìm kiếm thiết bị công nghệ vừa hiện đại, vừa tiện ích để nâng cao không gian sống
+                        của bạn?
+                        Đến với chúng tôi, bạn sẽ tìm thấy những sản phẩm công nghệ tiên tiến với đa dạng tính năng,
+                        kiểu dáng và công dụng. Với thiết kế tinh tế và chất lượng cao cấp, các sản phẩm của chúng tôi
+                        không chỉ mang lại sự tiện nghi mà còn giúp cải thiện hiệu suất công việc và giải trí tại nhà.
+                    </p>
+                    <p>
+                        <a href="/shop" class="btn btn-white-outline">Khám phá ngay</a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="hero-img-wrap">
+                    <img src="./assets/images/couch.png" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+<!-- Start Product Section -->
+<div class="product-section">
+    <div class="container">
+        <div class="row">
+            <!-- Start Column 1 -->
+            <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+                <h2 class="mb-4 section-title">Sản phẩm được chăm chút tỉ mỉ từ những nguyên liệu cao cấp.</h2>
+                <p class="mb-4">Chúng tôi tin rằng một sản phẩm công nghệ tốt không chỉ phải mạnh mẽ và hiệu quả, mà còn
+                    phải bền bỉ theo thời gian. Vì vậy, mỗi thiết bị công nghệ của chúng tôi đều được chọn lựa kỹ càng
+                    từ những linh kiện cao cấp, đảm bảo chất lượng vượt trội và hiệu suất ổn định lâu dài. Hãy cùng
+                    chúng tôi trải nghiệm sự khác biệt và cảm nhận công nghệ đỉnh cao! </p>
+                <p><a href="/shop" class="btn">Khám phá ngay</a></p>
+            </div>
+            <!-- End Column 1 -->
+
+            <!-- Loading Spinner -->
+            <div *ngIf="!isLoading" class="col-12 text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Đang tải...</span>
+                </div>
+                <p>Đang tải sản phẩm...</p>
+            </div>
+
+            <!-- Product Columns -->
+            <ng-container *ngIf="isLoading && products.length > 0">
+                <div *ngFor="let product of products.slice(0, 3)" class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                    <a class="product-item" (click)="onProductClick(product.id)">
+                        <img [src]="product.image || './assets/images/placeholder.png'"
+                            class="img-fluid product-thumbnail" alt="{{ product.name }}">
+                        <h3 class="product-title">{{ product.name }}</h3>
+                        <strong class="product-price">
+                            {{ product.salePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) }}
+                        </strong>
+                        <span class="icon-cross">
+                            <img src="./assets/images/cross.svg" class="img-fluid">
+                        </span>
+                    </a>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</div>
+<!-- End Product Section -->
+<!-- End Product Section -->
+
+<!-- Start Why Choose Us Section -->
+<div class="why-choose-section">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-6">
+                <h2 class="section-title">Tại sao lại chọn chúng tôi?</h2>
+                <p>Trải nghiệm công nghệ tiên tiến với các sản phẩm điện tử và thiết bị công nghệ cao cấp. Chúng tôi
+                    cung cấp các sản phẩm được trang bị công nghệ mới nhất, mang lại hiệu suất vượt trội và trải nghiệm
+                    người dùng mượt mà. Từ điện thoại thông minh, laptop, máy tính bảng đến các thiết bị gia dụng thông
+                    minh, mỗi sản phẩm đều được chọn lọc kỹ lưỡng từ các thương hiệu uy tín. Với thiết kế hiện đại và
+                    tính năng tối ưu, chúng tôi cam kết mang đến cho bạn những sản phẩm công nghệ chất lượng, dịch vụ hỗ
+                    trợ chuyên nghiệp và trải nghiệm tuyệt vời nhất.</p>
+
+                <div class="row my-5">
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon">
+                                <img src="./assets/images/truck.svg" alt="Image" class="imf-fluid">
+                            </div>
+                            <h3>Nhanh chóng &amp; Miễn phí</h3>
+                            <p>Dịch vụ giao hàng của chúng tôi sẽ mang sản phẩm đến tận tay trong thời gian ngắn nhất.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon">
+                                <img src="./assets/images/bag.svg" alt="Image" class="imf-fluid">
+                            </div>
+                            <h3>Mua hàng dễ dàng</h3>
+                            <p> Chỉ cần vài thao tác đơn giản, bạn đã có thể sở hữu sản phẩm yêu thích.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon">
+                                <img src="./assets/images/support.svg" alt="Image" class="imf-fluid">
+                            </div>
+                            <h3>Hỗ trợ 24/7</h3>
+                            <p>Đội ngũ hỗ trợ khách hàng của chúng tôi luôn sẵn sàng phục vụ bạn mọi lúc, mọi nơi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon">
+                                <img src="./assets/images/return.svg" alt="Image" class="imf-fluid">
+                            </div>
+                            <h3>Hoàn trả dễ dàng</h3>
+                            <p>Hoàn trả đơn giản, nhanh chóng. Liên hệ chúng tôi trong vòng 30 ngày để được hỗ trợ.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="img-wrap">
+                    <img src="./assets/images/why-choose-us-img.jpg" alt="Image" class="img-fluid">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Why Choose Us Section -->
+
+<!-- Start We Help Section -->
+<div class="we-help-section">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-7 mb-5 mb-lg-0">
+                <div class="imgs-grid">
+                    <div class="grid grid-1"><img src="./assets/images/img-grid-1.jpg" alt="Untree.co"></div>
+                    <div class="grid grid-2"><img src="./assets/images/img-grid-2.jpg" alt="Untree.co"></div>
+                    <div class="grid grid-3"><img src="./assets/images/img-grid-3.jpg" alt="Untree.co"></div>
+                </div>
+            </div>
+            <div class="col-lg-5 ps-lg-5">
+                <h2 class="section-title mb-4">Chúng tôi đồng hành cùng bạn tạo nên không gian công nghệ hiện đại</h2>
+                <p>Bạn đang tìm kiếm những thiết bị công nghệ hiện đại, giúp tối ưu hóa không gian sống và làm việc?
+                    Chúng tôi sẽ đồng hành cùng bạn từ việc lựa chọn sản phẩm đến thiết lập hệ thống công nghệ thông
+                    minh. Với dịch vụ tư vấn và cung cấp các thiết bị điện tử cao cấp, chúng tôi cam kết mang đến cho
+                    bạn không gian sống và làm việc tiện nghi, tối ưu hóa hiệu suất và đem lại trải nghiệm công nghệ
+                    tuyệt vời nhất.</p>
+
+
+                <ul class="list-unstyled custom-list my-4">
+                    <li>Thiết kế độc đáo, sáng tạo.</li>
+                    <li>Đội ngũ chuyên nghiệp.</li>
+                    <li>Vật liệu cao cấp.</li>
+                    <li>Dịch vụ trọn gói.</li>
+                </ul>
+                <p><a herf="/shop" class="btn">Khám phá ngay</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End We Help Section -->
+
+
+<!-- Start Testimonial Slider -->
+<div class="testimonial-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto text-center">
+                <h2 class="section-title">Làm hài lòng khách hàng là sứ mệnh</h2>
+                <p>Chúng tôi luôn đặt sự hài lòng của khách hàng lên hàng đầu. Vì vậy, chúng tôi luôn nỗ lực không ngừng
+                    để mang đến những sản phẩm/dịch vụ chất lượng cao nhất, đáp ứng mọi nhu cầu của khách hàng.</p>
+
+            </div>
+        </div>
+
+        <input type="radio" name="slide" id="slide1" class="testimonial-radio" checked>
+        <input type="radio" name="slide" id="slide2" class="testimonial-radio">
+        <input type="radio" name="slide" id="slide3" class="testimonial-radio">
+        <input type="radio" name="slide" id="slide4" class="testimonial-radio">
+        <input type="radio" name="slide" id="slide5" class="testimonial-radio">
+
+        <div class="testimonial-slider">
+            <div class="testimonial-item">
+
+                <div class="author-info">
+                    <img src="./assets/images/person-1.png" alt="Phan Việt Nam" class="author-image">
+                    <h3>Phan Việt Nam</h3>
+                    <span>CEO, Co-Founder</span>
+                </div>
+                <blockquote>
+                    "Tôi thực sự ấn tượng với chất lượng sản phẩm tại cửa hàng. Chiếc Macbook mà tôi vừa mua không chỉ
+                    có
+                    thiết kế hiện đại, tinh tế mà còn hiệu năng vô cùng tốt."
+                </blockquote>
+            </div>
+
+            <div class="testimonial-item">
+
+                <div class="author-info">
+                    <img src="./assets/images/person_3.png" alt="Nguyễn Văn An" class="author-image">
+                    <h3>Nguyễn Văn An</h3>
+                    <span>Giám đốc Kinh doanh</span>
+                </div>
+                <blockquote>
+                    "Dịch vụ chăm sóc khách hàng của công ty rất chuyên nghiệp. Mọi yêu cầu của tôi đều được giải quyết
+                    nhanh chóng và hiệu quả."
+                </blockquote>
+            </div>
+
+            <div class="testimonial-item">
+
+                <div class="author-info">
+                    <img src="./assets/images/anh-profile-nam.png" alt="Nguyễn Duy Hoàng" class="author-image">
+                    <h3>Nguyễn Duy Hoàng</h3>
+                    <span>Nhà Thiết Kế</span>
+                </div>
+                <blockquote>
+                    "Sản phẩm của công ty luôn đáng tin cậy. Tôi đã sử dụng và giới thiệu cho nhiều người bạn."
+                </blockquote>
+            </div>
+
+            <div class="testimonial-item">
+
+                <div class="author-info">
+                    <img src="./assets/images/person_4.png" alt="Madison Mark" class="author-image">
+                    <h3>Madison Mark</h3>
+                    <span>Doanh Nhân</span>
+                </div>
+                <blockquote>
+                    "Great Product Come With Great Service ."
+                </blockquote>
+            </div>
+
+            <div class="testimonial-item">
+
+                <div class="author-info">
+                    <div class="author-pic">
+                        <img src="./assets/images/person_2.png" alt="Maria Jones" class="img-fluid">
+                    </div>
+                    <h3>Phan Việt Nam</h3>
+                    <span>CEO, Co-Founder.</span>
+                </div>
+                <blockquote>Tôi thực sự ấn tượng với chất lượng sản phẩm tại cửa hàng!
+                </blockquote>
+            </div>
+
+
+        </div>
+
+        <div class="testimonial-nav">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+            <label for="slide4"></label>
+            <label for="slide5"></label>
+        </div>
+    </div>
+
+</div>
+<!-- End Testimonial Slider -->
+
+<!-- Start Blog Section -->
+<div class="blog-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="section-title">Bài viết nổi bật</h2>
+            </div>
+            <div class="col-md-6 text-start text-md-end">
+                <a href="#" class="more">Xem tất cả</a>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a href="#" class="post-thumbnail"><img src="./assets/images/post-1.jpg" alt="Image"
+                            class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a href="#">Ý tưởng cho người lần đầu gia nhập sân chơi công nghệ.</a></h3>
+                        <div class="meta">
+                            <span>by <a href="#">Diệp Lai</a></span> <span> on <a href="#">Dec 19, 2021</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a href="#" class="post-thumbnail"><img src="./assets/images/post-2.jpg" alt="Image"
+                            class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a href="#">Cập nhật công nghệ cho tương lai.
+
+                            </a></h3>
+
+
+
+                        <div class="meta">
+                            <span>by <a href="#">Huỳnh Kha</a></span> <span> on <a href="#">Dec 15, 2021</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                <div class="post-entry">
+                    <a href="#" class="post-thumbnail"><img src="./assets/images/post-3.jpg" alt="Image"
+                            class="img-fluid"></a>
+                    <div class="post-content-entry">
+                        <h3><a href="#">Giải pháp công nghệ hiện đại.</a></h3>
+                        <div class="meta">
+                            <span>by <a href="#">Yến Phương</a></span> <span> on <a href="#">Dec 12, 2021</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Blog Section -->
+<app-footer></app-footer>

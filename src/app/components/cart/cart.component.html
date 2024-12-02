@@ -1,0 +1,105 @@
+<app-header></app-header>
+<div class="container">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Giỏ Hàng</b></h4>
+                        </div>
+                        <div class="col align-self-center text-right text-muted">
+                            {{ temporaryCartItems.length }} items
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Cart Items -->
+                <div *ngFor="let item of temporaryCartItems" class="row border-top border-bottom">
+                    <div class="row main align-items-center">
+                        <div class="col-2">
+                            <img class="img-fluid" [src]="item.product.image" [alt]="item.product.name">
+                        </div>
+                        <div class="col">
+                            <div class="row text-muted">{{ item.product.brandName }}</div>
+                            <div class="row">{{ item.product.name }}</div>
+                        </div>
+                        <div class="col">
+                            <a (click)="prepareDecreaseQuantity(item); $event.preventDefault()">-</a>
+                            <span class="border">{{ item.quantity }}</span>
+                            <a (click)="prepareIncreaseQuantity(item); $event.preventDefault()">+</a>
+                        </div>
+                        <div class="col">
+                            {{ item.product.salePrice | currency:'VND' }}
+                            <span class="close" (click)="prepareRemoveItem(item)">&#10005;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="isChangesPending">
+                    <div class="col text-right">
+                        <button class="btn btn-primary mr-2" (click)="confirmChanges()">Confirm Changes</button>
+                        <button class="btn btn-secondary" (click)="cancelChanges()">Cancel</button>
+                    </div>
+                </div>
+
+                <a href="/shop" class="back-to-shop">
+                    <span class="arrow">&leftarrow;</span>
+                    <span class="text-muted">Back to shop</span>
+                </a>
+                <a href="/orders" class="back-to-order">
+                    <span class="text-muted">Đơn hàng</span>
+                    <span class="arrow">&rightarrow;</span>
+
+                </a>
+
+            </div>
+            <div class="col-md-4 summary">
+                <div>
+                    <h5><b>Summary</b></h5>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col" style="padding-left:0;">Tổng hoá đơn</div>
+                    <div class="col text-right">{{ totalAmount | currency:'VND' }}</div>
+                </div>
+                <form [formGroup]="orderForm">
+                    <p>Chọn thanh toán</p>
+                    <select formControlName="paymentMenthod">
+                        <option *ngFor="let method of paymentMenthods" [value]="method.value">
+                            {{method.label}}
+                        </option>
+                    </select>
+                    <p>Months to Pay</p>
+                    <select formControlName="monthsToPay">
+                        <option value="1">1 Month</option>
+                        <option value="3">3 Months</option>
+                        <option value="6">6 Months</option>
+                        <option value="12">12 Months</option>
+                    </select>
+                    <p>Select Address</p>
+                    <select formControlName="address">
+                        <option *ngFor="let address of addresss" [value]="address.id">
+                          {{ address.address }}
+                        </option>
+                      </select>
+                      <p *ngIf="addresss.length < 1">
+                        <a (click)="navigateToAddress()">Chưa tạo địa chỉ? Nhấn để tạo mới</a>
+                      </p>
+                      
+                    <p>Voucher</p>
+                    <input id="voucherId" formControlName="voucherId" placeholder="Enter voucher code">
+                </form>
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">TỔNG THANH TOÁN</div>
+                    <div class="col text-right">{{ totalAmount | currency:'VND' }}</div>
+                </div>
+                <button class="btn" 
+                [disabled]="!temporaryCartItems || temporaryCartItems.length === 0" 
+                (click)="placeOrder()">CHECKOUT</button>
+        
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

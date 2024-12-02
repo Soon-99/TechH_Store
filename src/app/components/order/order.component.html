@@ -1,0 +1,139 @@
+<app-header></app-header>
+<div class="container py-5">
+  <div *ngIf="isLoading" class="text-center">
+    <p>Loading orders...</p>
+  </div>
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+  <div *ngIf="!isLoading && !error">
+    <div *ngFor="let order of filteredOrders" class="mb-4">
+      <section>
+        <div class="container">
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-10 col-lg-8 col-xl-6">
+              <div class="card card-stepper" style="border-radius: 16px;">
+                <div class="card-header p-4">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <p class="text-muted mb-2">
+                        Mã đơn hàng <span class="fw-bold text-body">{{ order.id }}</span>
+                      </p>
+                      <p class="text-muted mb-0">
+                        Ngày tạo đơn <span class="fw-bold text-body">{{ order.createdDate | date:'mediumDate' }}</span>
+                      </p>
+                    </div>
+                    <div>
+                      <h6 class="mb-0">
+                        <a (click)="onOrderClick(order.id)" class="btn btn-secondary me-2">
+                          Xem chi tiết
+                        </a>
+                        <button *ngIf="order.status !== 'SHIPPED' && order.status !== 'CANCELLED'" (click)="cancelOrder(order.id)" class="btn btn-danger">
+                          Huỷ
+                        </button>
+                        
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body p-4">
+                  <div class="d-flex flex-row mb-4 pb-2">
+                    <div class="flex-fill">
+                      <p class="text-muted">Giao cho: {{ order.userName }}</p>
+                      <h4 class="mb-3">{{ order.totalAmount | currency:'VND' }}</h4>
+                      <p class="text-muted">
+                        Phương thức thanh toán: {{ getPaymentMethodLabel(order.paymentMethod) }}
+                      </p>
+                      <p class="text-muted">
+                        Trạng thái thanh toán:
+                        <span
+                          [ngClass]="{
+                            'text-success': order.paymentStatus === 'true',
+                            'text-warning': order.paymentStatus === 'false'
+                          }"
+                        >
+                          {{ order.paymentStatus === 'true' ? 'Đã thanh toán' : 'Chưa thanh toán' }}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <ul
+                    id="progressbar-1"
+                    class="mx-0 mt-0 mb-5 px-0 pt-0 pb-4"
+                  >
+                    <li
+                      class="step0"
+                      [ngClass]="{'active': order.status === 'CONFIRMED' }"
+                      id="step1"
+                    >
+                      <span style="margin-left: 22px; margin-top: 12px;">XÁC NHẬN</span>
+                    </li>
+                    <li
+                      class="step0"
+                      [ngClass]="{'active': order.status === 'DELIVERED' , 'text-center': true}"
+                      id="step2"
+                    >
+                      <span>ĐANG GIAO </span>
+                    </li>
+                    <li
+                      class="step0"
+                      [ngClass]="{
+                        'active': order.status === 'SHIPPED', 
+                        'text-danger': order.status === 'CANCELLED',
+                        'text-muted text-end': true
+                      }"
+                      id="step3"
+                    >
+                      <span style="margin-right: 22px;">
+                        {{ order.status === 'CANCELLED' ? 'ĐÃ HỦY' : 'ĐÃ GIAO' }}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <nav *ngIf="totalPages > 1">
+      <ul class="pagination justify-content-center">
+        <li
+          class="page-item"
+          [ngClass]="{'disabled': currentPage === 1}"
+        >
+          <button
+            class="page-link"
+            (click)="changePage(currentPage - 1)"
+          >
+            Previous
+          </button>
+        </li>
+        <li
+          *ngFor="let page of getPageArray()"
+          class="page-item"
+          [ngClass]="{'active': page === currentPage}"
+        >
+          <button
+            class="page-link"
+            (click)="changePage(page)"
+          >
+            {{ page }}
+          </button>
+        </li>
+        <li
+          class="page-item"
+          [ngClass]="{'disabled': currentPage === totalPages}"
+        >
+          <button
+            class="page-link"
+            (click)="changePage(currentPage + 1)"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,61 @@
+<app-header></app-header>
+<div class="card">
+  <div class="card__title">
+    <div class="icon">
+      <a href="/shop"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <h3>{{product?.brandName}}</h3>
+  </div>
+  <div class="card__body">
+    <div class="half">
+      <div class="featured_text">
+        <h1 [ngStyle]="{'margin-top': '20px', 'margin-bottom': '10px'}">{{product?.name}}</h1>
+        <p class="sub" [ngStyle]="{'margin-top': '10px', 'margin-bottom': '10px'}">{{product?.categoryName}}</p>
+        <p class="price" [ngStyle]="{'margin-top': '15px', 'margin-bottom': '20px'}">{{ product?.salePrice | currency:'VND':'symbol':'1.0-0':'vi-VN' }}</p>
+        
+      </div>
+      <div class="image">
+        <img [src]="product?.image" [alt]="product?.name">
+      </div>
+    </div>
+    <div class="half">
+      <div class="description">
+        <p>{{ product?.description }}</p>
+      </div>
+      <button class="stock" (click)="onProductClick(product?.id)">
+        <i class="fa fa-pen"></i> Đánh giá
+    </button>
+      <div class="reviews">
+        <ul class="stars">
+          <li *ngFor="let star of getStars()">
+            <i [class]="star"></i>
+          </li>
+        </ul>
+        <span>({{ product?.rating || 0 }} đánh giá)</span>
+      </div>
+    </div>
+  </div>
+  <div class="card__footer">
+    <div class="recommend">
+      <p>Recommended by</p>
+      <h3>Andrew Palmer</h3>
+    </div>
+    <div class="action">
+      <button 
+      type="button" 
+      (click)="addToCart()" 
+      [disabled]="!product || product.quantity === 0"
+    >
+      Thêm vào giỏ hàng
+    </button>
+    <button 
+    type="button" 
+    (click)="buyNow()" 
+    [disabled]="!product || product.quantity === 0"
+  >
+   Mua ngay
+  </button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

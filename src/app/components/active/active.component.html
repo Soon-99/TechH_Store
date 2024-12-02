@@ -1,0 +1,14 @@
+<app-header></app-header>
+<div class="d-flex justify-content-center align-items-center container">
+  <div class="card py-5 px-3">
+    <h5 class="m-0">Kích hoạt tài khoản</h5><span class="mobile-text">Mã xác thực <b class="text-danger">+91
+        86684833</b></span>
+    <div class="d-flex flex-row mt-5"><input type="text" class="form-control" [(ngModel)]="verifyCode" id="verifyCode"
+        placeholder="Nhập mã xác thực từ email"></div>
+    <div class="text-center mt-5"><button (click)="submitActiveCode()" class="btn btn-primary w-100 mt-3"
+        [disabled]="!verifyCode">
+        Kích hoạt
+      </button></div>
+  </div>
+</div>
+<app-footer></app-footer>

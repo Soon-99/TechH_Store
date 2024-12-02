@@ -1,0 +1,131 @@
+<div class="container">
+  <h1>Product Admin</h1>
+  
+  <div class="row mb-3">
+    <div class="col-md-8">
+      <!-- Search functionality can be added here if needed -->
+    </div>
+    <div class="col-md-4 text-end">
+      <button class="btn btn-success" (click)="openCreateProductModal()">
+        Create New Product
+      </button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Sale Price</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(product of products; track product.id) {
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.salePrice | currency }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.categoryName }}</td>
+          <td>
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary btn-sm" >
+                Update
+              </button>
+              <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Create Product Modal -->
+  @if (showCreateProductModal) {
+    <div class="modal" tabindex="-1" style="display: block; background-color: rgba(0,0,0,0.5);">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create New Product</h5>
+            <button type="button" class="btn-close" (click)="showCreateProductModal = false"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" 
+                  [(ngModel)]="newProduct.name" name="name" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="productCategory" class="form-label">Category</label>
+                <select class="form-select" id="productCategory" 
+                  [(ngModel)]="newProduct.categoryId" name="categoryId" required>
+                  <option value="0">Select Category</option>
+                  @for(category of categories; track category.id) {
+                    <option [value]="category.id">{{ category.name }}</option>
+                  }
+                </select>
+              </div>
+              
+              <div class="mb-3">
+                <label for="productQuantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="productQuantity" 
+                  [(ngModel)]="newProduct.quantity" name="quantity" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="importPrice" class="form-label">Import Price</label>
+                <input type="number" class="form-control" id="importPrice" 
+                  [(ngModel)]="newProduct.importPrice" name="importPrice" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="salePrice" class="form-label">Sale Price</label>
+                <input type="number" class="form-control" id="salePrice" 
+                  [(ngModel)]="newProduct.salePrice" name="salePrice" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="productDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="productDescription" 
+                  [(ngModel)]="newProduct.description" name="description"></textarea>
+              </div>
+              
+              <div class="mb-3">
+                <label for="productCode" class="form-label">Product Code</label>
+                <input type="text" class="form-control" id="productCode" 
+                  [(ngModel)]="newProduct.code" name="code">
+              </div>
+              
+              <div class="mb-3">
+                <label for="productImage" class="form-label">Product Image</label>
+                <input type="file" class="form-control" id="productImage" 
+                  (change)="onFileSelected($event)" name="image" accept="image/*">
+                @if (selectedImageFileName) {
+                  <small class="text-success">{{ selectedImageFileName }} selected</small>
+                }
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="showCreateProductModal = false">
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary" (click)="createProduct()">
+              Create Product
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
